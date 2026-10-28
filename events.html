@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Events · Northwind Coffee</title>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="brand">Northwind Coffee</a>
+      <nav>
+        <a href="menu.html">Menu</a>
+        <a href="locations.html">Locations</a>
+        <a href="events.html">Events</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Cupping nights</h1>
+      <p>Join us every Thursday for a guided tasting.</p>
+      <button id="rsvp-button" type="button">RSVP</button>
+    </main>
+    <button id="assistant-open" type="button">Ask barista AI</button>
+    <aside id="assistant-panel" hidden>
+      <header>
+        <h2>Barista AI</h2>
+        <button id="assistant-close" type="button">Close</button>
+      </header>
+      <ul id="assistant-messages"></ul>
+      <form id="assistant-form">
+        <input id="assistant-input" placeholder="Ask about roasts and delivery" />
+        <button id="assistant-submit" type="submit">Send</button>
+      </form>
+    </aside>
+    <script src="js/site.js"></script>
+    <script src="js/assistant.js"></script>
+  </body>
+</html>
