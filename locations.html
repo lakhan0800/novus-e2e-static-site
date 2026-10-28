@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Locations · Northwind Coffee</title>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="brand">Northwind Coffee</a>
+    </header>
+    <main>
+      <h1>Find a café</h1>
+      <input id="location-search" placeholder="City or zip" />
+      <button id="location-search-button">Search</button>
+    </main>
+    <button id="assistant-open" type="button">Ask barista AI</button>
+    <aside id="assistant-panel" hidden>
+      <header>
+        <h2>Barista AI</h2>
+        <button id="assistant-close" type="button">Close</button>
+      </header>
+      <ul id="assistant-messages"></ul>
+      <form id="assistant-form">
+        <input id="assistant-input" placeholder="Ask about roasts and delivery" />
+        <button id="assistant-submit" type="submit">Send</button>
+      </form>
+    </aside>
+    <script src="js/site.js"></script>
+    <script src="js/assistant.js"></script>
+  </body>
+</html>

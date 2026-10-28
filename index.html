@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Northwind Coffee</title>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="brand">Northwind Coffee</a>
+      <nav>
+        <a href="menu.html">Menu</a>
+        <a href="locations.html">Locations</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Fresh roasts, delivered weekly</h1>
+      <form id="newsletter-form">
+        <input id="newsletter-email" type="email" placeholder="you@example.com" required />
+        <button id="newsletter-subscribe" type="submit">Subscribe</button>
+      </form>
+    </main>
+    <button id="assistant-open" type="button">Ask barista AI</button>
+    <aside id="assistant-panel" hidden>
+      <header>
+        <h2>Barista AI</h2>
+        <button id="assistant-close" type="button">Close</button>
+      </header>
+      <ul id="assistant-messages"></ul>
+      <form id="assistant-form">
+        <input id="assistant-input" placeholder="Ask about roasts and delivery" />
+        <button id="assistant-submit" type="submit">Send</button>
+      </form>
+    </aside>
+    <script src="js/site.js"></script>
+    <script src="js/assistant.js"></script>
+  </body>
+</html>
