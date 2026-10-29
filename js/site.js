@@ -1,3 +1,11 @@
+// Boot Pendo once per page with an anonymous visitor; the SDK resolves a
+// returning visitor from cookies/localStorage when one exists.
+pendo.initialize({
+  visitor: {
+    id: "",
+  },
+});
+
 const order = JSON.parse(localStorage.getItem("order") || "[]");
 
 document.querySelectorAll(".add-to-order").forEach((button) => {
