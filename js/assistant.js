@@ -36,14 +36,46 @@
     messages.push({ role: "user", content: text });
     input.value = "";
     render();
-    const response = await fetch("/api/assistant", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ messages }),
-    });
-    const body = await response.json();
+    let response;
+    let body;
+    try {
+      response = await fetch("/api/assistant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ messages }),
+      });
+      body = await response.json();
+    } catch (err) {
+      // Request failed (network error or unparseable response).
+      trackReplyReceived(response, undefined);
+      throw err;
+    }
     messages.push({ role: "assistant", content: body.reply ?? "" });
     render();
+    trackReplyReceived(response, body);
   });
+
+  /**
+   * Pendo Track Event: fires once per assistant request, after the reply has
+   * been added to the conversation or the request has failed. Never sends the
+   * user's message or the reply text (may contain PII) — only its length.
+   */
+  function trackReplyReceived(response, body) {
+    try {
+      if (!window.pendo || typeof window.pendo.track !== "function") return;
+      const reply = (body && body.reply) || "";
+      window.pendo.track("barista_ai_reply_received", {
+        success: Boolean(response && response.ok && body),
+        response_status: response ? response.status : 0,
+        reply_empty: !reply,
+        reply_length: reply.length,
+        conversation_turn_count: messages.filter((m) => m.role === "user")
+          .length,
+        page_path: location.pathname,
+      });
+    } catch (trackingError) {
+      // Never let analytics break the assistant.
+    }
+  }
 })();
