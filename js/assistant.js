@@ -45,5 +45,19 @@
     const body = await response.json();
     messages.push({ role: "assistant", content: body.reply ?? "" });
     render();
+    // Pendo Track Event: assistant reply returned by /api/assistant and shown in the chat.
+    if (
+      response.ok &&
+      window.pendo &&
+      typeof window.pendo.track === "function"
+    ) {
+      window.pendo.track("Barista AI reply received", {
+        response_status: response.status,
+        has_reply: Boolean(body.reply),
+        reply_length: (body.reply ?? "").length,
+        message_count: messages.length,
+        page_path: window.location.pathname,
+      });
+    }
   });
 })();
