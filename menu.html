@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menu · Northwind Coffee</title>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="brand">Northwind Coffee</a>
+    </header>
+    <main>
+      <h1>Menu</h1>
+      <ul>
+        <li>House blend <button class="add-to-order" data-item="house-blend">Add</button></li>
+        <li>Single origin <button class="add-to-order" data-item="single-origin">Add</button></li>
+      </ul>
+      <button id="checkout-button">Checkout</button>
+    </main>
+    <button id="assistant-open" type="button">Ask barista AI</button>
+    <aside id="assistant-panel" hidden>
+      <header>
+        <h2>Barista AI</h2>
+        <button id="assistant-close" type="button">Close</button>
+      </header>
+      <ul id="assistant-messages"></ul>
+      <form id="assistant-form">
+        <input id="assistant-input" placeholder="Ask about roasts and delivery" />
+        <button id="assistant-submit" type="submit">Send</button>
+      </form>
+    </aside>
+    <script src="js/site.js"></script>
+    <script src="js/assistant.js"></script>
+  </body>
+</html>
