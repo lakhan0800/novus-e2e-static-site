@@ -45,5 +45,14 @@
     const body = await response.json();
     messages.push({ role: "assistant", content: body.reply ?? "" });
     render();
+
+    // Track completion of the AI barista interaction
+    if (typeof pendo !== "undefined" && pendo.track) {
+      pendo.track("barista_ai_response_received", {
+        conversation_length: messages.length,
+        query_length: text.length,
+        response_success: response.ok,
+      });
+    }
   });
 })();
