@@ -8,6 +8,8 @@
   const list = document.getElementById("assistant-messages");
   if (!fab || !panel || !closeBtn || !form || !input || !list) return;
 
+  const AGENT_ID = "kYd2dyKX_E2kvhId2W6nyZu4ChU";
+  const conversationId = crypto.randomUUID();
   const messages = [];
 
   const render = () => {
@@ -36,6 +38,18 @@
     messages.push({ role: "user", content: text });
     input.value = "";
     render();
+
+    const promptMessageId = crypto.randomUUID();
+    if (typeof pendo !== "undefined" && pendo.trackAgent) {
+      pendo.trackAgent("prompt", {
+        agentId: AGENT_ID,
+        conversationId: conversationId,
+        messageId: promptMessageId,
+        content: text,
+        suggestedPrompt: false,
+      });
+    }
+
     const response = await fetch("/api/assistant", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,7 +57,17 @@
       body: JSON.stringify({ messages }),
     });
     const body = await response.json();
-    messages.push({ role: "assistant", content: body.reply ?? "" });
+    const reply = body.reply ?? "";
+    messages.push({ role: "assistant", content: reply });
     render();
+
+    if (typeof pendo !== "undefined" && pendo.trackAgent) {
+      pendo.trackAgent("agent_response", {
+        agentId: AGENT_ID,
+        conversationId: conversationId,
+        messageId: crypto.randomUUID(),
+        content: reply,
+      });
+    }
   });
 })();
