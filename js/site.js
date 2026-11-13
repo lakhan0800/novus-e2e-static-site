@@ -1,3 +1,11 @@
+// Boot Novus once per page load. An empty visitor id lets the SDK reuse a
+// returning visitor from cookies or localStorage, or start a new anonymous one.
+window.pendo.initialize({
+  visitor: {
+    id: "",
+  },
+});
+
 const order = JSON.parse(localStorage.getItem("order") || "[]");
 
 document.querySelectorAll(".add-to-order").forEach((button) => {
