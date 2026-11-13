@@ -1,3 +1,12 @@
+// Boot Novus by Pendo once per page load. An empty visitor id lets the SDK
+// reuse the visitor stored in cookies or localStorage, or start a new
+// anonymous visitor. This site has no sign-in, so no identify call is needed.
+pendo.initialize({
+  visitor: {
+    id: "",
+  },
+});
+
 const order = JSON.parse(localStorage.getItem("order") || "[]");
 
 document.querySelectorAll(".add-to-order").forEach((button) => {
