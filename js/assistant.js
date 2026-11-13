@@ -10,6 +10,17 @@
 
   const messages = [];
 
+  /** Sends a Pendo Track Event when the Pendo agent is loaded. Tracking never blocks the chat. */
+  const trackPendoEvent = (name, properties) => {
+    try {
+      if (typeof window.pendo !== "undefined" && typeof window.pendo.track === "function") {
+        window.pendo.track(name, properties);
+      }
+    } catch (trackingError) {
+      console.warn("Pendo track failed", trackingError);
+    }
+  };
+
   const render = () => {
     list.innerHTML = "";
     for (const message of messages) {
@@ -45,5 +56,13 @@
     const body = await response.json();
     messages.push({ role: "assistant", content: body.reply ?? "" });
     render();
+    // Fires once per answered message, after the assistant reply is rendered in the chat.
+    if (response.ok && typeof body.reply === "string" && body.reply.length > 0) {
+      trackPendoEvent("Barista AI reply received", {
+        reply_length: body.reply.length,
+        conversation_message_count: messages.length,
+        page_path: window.location.pathname,
+      });
+    }
   });
 })();
